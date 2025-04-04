@@ -13,7 +13,7 @@ export default defineSchema({
     clerkId: v.string(),
   }).index("by_clerkId", ["clerkId"]),
 
-  // getUserByclerkId(123) -> {id:1, username: "john", email: "john@example.com"}
+  
 
   posts: defineTable({
     userId: v.id("users"),
@@ -53,6 +53,13 @@ export default defineSchema({
     commentId: v.optional(v.id("comments")),
   }).index("by_receiver", ["receiverId"]),
 
-  
+  bookmarks: defineTable({
+    userId: v.id("users"),
+    postId: v.id("posts"),
+  })
+    .index("by_user", ["userId"])
+    .index("by_post", ["postId"])
+    .index("by_user_and_post", ["userId", "postId"]),
+
 
 });
