@@ -1,8 +1,6 @@
-import { useSegments } from "expo-router";
-import { useRouter } from "expo-router";
+import { useSegments, useRouter, Stack } from "expo-router";
 import { useAuth } from "@clerk/clerk-expo";
 import { useEffect } from "react";
-import { Stack } from "expo-router"; // Import Stack component for screen navigation
 
 export default function InitialLayout() {
   const { isLoaded, isSignedIn } = useAuth();
@@ -10,9 +8,7 @@ export default function InitialLayout() {
   const router = useRouter();
 
   useEffect(() => {
-    if (!isLoaded) {
-      return;
-    }
+    if (!isLoaded) return;
 
     const inAuthScreen = segments[0] === "(auth)";
 
@@ -21,17 +17,13 @@ export default function InitialLayout() {
     } else if (isSignedIn && inAuthScreen) {
       router.replace("/(tabs)");
     }
-  }, [isLoaded]); // Adding dependencies to useEffect
+  }, [isLoaded, isSignedIn, segments]); // include all necessary deps
 
-  // If not loaded, don't render anything
-  if (!isLoaded) {
-    return null;
-  }
+  if (!isLoaded) return null;
 
-  // You can add your Stack navigation here
   return (
     <Stack screenOptions={{ headerShown: false }}>
-      {/* Define your screen components */}
+      {/* Screens defined by the router structure */}
     </Stack>
   );
 }

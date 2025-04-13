@@ -19,5 +19,6 @@ export const COLORS = {
     white: '#FFFFFF',
     black: '#000000',
     grey: '#B0B0B0', // Subtle gray for inactive icons/text
+    surface: '#282828', // Dark surface for cards and surfaces
   };
   

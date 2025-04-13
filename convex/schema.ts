@@ -5,13 +5,15 @@ export default defineSchema({
     username: v.string(),
     fullname: v.string(),
     email: v.string(),
+    posts: v.number(),
     bio: v.optional(v.string()),
-    password: v.string(),
+   
     image: v.string(),
     following: v.number(),
     followers: v.number(),
     clerkId: v.string(),
-  }).index("by_clerkId", ["clerkId"]),
+
+  }).index("by_clerk_id", ["clerkId"]),
 
   
 
