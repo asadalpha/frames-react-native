@@ -120,7 +120,7 @@ export default function CreateScreen() {
       style={styles.container}
       keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0}
     >
-      <View style={styles.contentContainer}>
+      <View style={styles.header}>
         <TouchableOpacity
           onPress={() => {
             setSelectImage(null);
@@ -138,6 +138,7 @@ export default function CreateScreen() {
         <TouchableOpacity
           style={[styles.shareButton, isSharing && styles.shareButtonDisabled]}
           disabled={isSharing || !selectedImage}
+          onPress={handleShare}
         >
           {isSharing ? (
             <ActivityIndicator size="small" color={COLORS.primary} />
@@ -145,53 +146,54 @@ export default function CreateScreen() {
             <Text style={styles.shareText}>Share</Text>
           )}
         </TouchableOpacity>
-        <ScrollView
-          contentContainerStyle={styles.scrollContent}
-          bounces={false}
-          keyboardShouldPersistTaps="handled"
-          showsVerticalScrollIndicator={false}
-          showsHorizontalScrollIndicator={false}
-        >
-          <View style={[styles.content, isSharing && styles.contentDisabled]}>
-            <View style={styles.imageSection}>
+      </View>
+      <ScrollView
+        contentContainerStyle={styles.scrollContent}
+        bounces={false}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
+      >
+        <View style={[styles.content, isSharing && styles.contentDisabled]}>
+          <View style={styles.imageSection}>
+            <Image
+              source={{ uri: selectedImage }}
+              style={styles.previewImage}
+              contentFit="cover"
+              transition={200}
+            />
+            <TouchableOpacity
+              style={styles.changeImageButton}
+              onPress={pickImage}
+              disabled={isSharing}
+            >
+              <Ionicons name="camera" size={20} color={COLORS.white} />
+              <Text style={styles.changeImageText}>Change</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.inputSection}>
+            <View style={styles.captionContainer}>
               <Image
-                source={{ uri: selectedImage }}
-                style={styles.previewImage}
+                source={{ uri: user?.imageUrl }}
+                style={styles.userAvatar}
                 contentFit="cover"
                 transition={200}
               />
-              <TouchableOpacity
-                style={styles.changeImageButton}
-                onPress={pickImage}
-                disabled={isSharing}
-              >
-                <Ionicons name="camera" size={20} color={COLORS.white} />
-                <Text style={styles.changeImageText}>Change</Text>
-              </TouchableOpacity>
-            </View>
-
-            <View style={styles.inputSection}>
-              <View style={styles.captionContainer}>
-                <Image
-                  source={{ uri: user?.imageUrl }}
-                  style={styles.userAvatar}
-                  contentFit="cover"
-                  transition={200}
-                />
-                <TextInput
-                  style={styles.captionInput}
-                  placeholder="Write a caption..."
-                  placeholderTextColor={COLORS.grey}
-                  value={caption}
-                  onChangeText={setCaption}
-                  editable={!isSharing}
-                  multiline
-                />
-              </View>
+              <TextInput
+                style={styles.captionInput}
+                placeholder="Write a caption..."
+                placeholderTextColor={COLORS.grey}
+                value={caption}
+                onChangeText={setCaption}
+                editable={!isSharing}
+                multiline
+              />
             </View>
           </View>
-        </ScrollView>
-      </View>
+        </View>
+      </ScrollView>
+
     </KeyboardAvoidingView>
   );
 }
