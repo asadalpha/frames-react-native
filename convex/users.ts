@@ -56,4 +56,4 @@ export async function getAuthenticatedUser(ctx:QueryCtx | MutationCtx){
     return currentUser;
 }
 
-// watch from ---- 2:38:55
+// watch ---- 2:38:55
